@@ -23,21 +23,16 @@ $(TEST_APP): $(TEST_OBJS) $(SHARED_LIB)
 
 .PHONY: release 
 release: clean
-	cd ..; \
+	@(cd ..; \
 	rm -r -f $(LIB_NAME)-$(LIB_VERSION); \
 	cp -a $(LIB_NAME) $(LIB_NAME)-$(LIB_VERSION); \
-	\
-	find $(LIB_NAME)-$(LIB_VERSION)/ -type d \
-		-name .svn \
-		-print \
-		-exec rm -r -f {} \; ; \
 	\
 	find $(LIB_NAME)-$(LIB_VERSION)/ -type f \
 		-name .\#* \
 		-print \
 		-exec rm -f {} \; ; \
 	\
-	tar -cjf $(LIB_NAME)-$(LIB_VERSION).tar.bz2 $(LIB_NAME)-$(LIB_VERSION)/;
+	tar --exclude=.svn -cjf $(LIB_NAME)-$(LIB_VERSION).tar.bz2 $(LIB_NAME)-$(LIB_VERSION)/;)
 
 .PHONY: clean
 clean:
